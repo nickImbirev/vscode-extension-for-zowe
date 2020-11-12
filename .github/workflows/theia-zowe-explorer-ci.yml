@@ -53,6 +53,14 @@ jobs:
           name: vscode-extension-for-zowe.vsix
           path: temp/plugins/vscode-extension-for-zowe.vsix
 
+      # Docker must be restarted to get Theia to see the new plugin
+      - name: Restart docker
+        run: docker container restart theia
+
+      # Theia must be restarted so it can use the new plugin
+      - name: Restart Theia
+        run: docker exec -d -p 3000:3000 -v "${PWD}/temp:/home/theia/.theia" theiaide/theia
+
       - name: Verify plugin loaded
         run: docker exec -i theia ls -la .theia/plugins
 
