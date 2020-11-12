@@ -59,7 +59,7 @@ jobs:
 
       # Theia must be restarted so it can use the new plugin
       - name: Restart Theia
-        run: docker exec --init -d -p 3000:3000 -v "${PWD}/temp:/home/theia/.theia" theiaide/theia
+        run: docker exec -it theia --init -d -p 3000:3000 -v "${PWD}/temp:/home/theia/.theia" theiaide/theia
 
       - name: Verify plugin loaded
         run: docker exec -i theia ls -la .theia/plugins
